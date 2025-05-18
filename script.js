@@ -19,6 +19,10 @@ const operators = ['/', '*', '-', '+'];
 
  document.getElementById('AC').addEventListener('click', clearAll);
 
+ function updateDisplay(value) {
+   out.value = value.toString().slice(0, 9);
+ }
+
  const buttons = document.querySelectorAll('input[type="button"]');
  buttons.forEach(btn => {
    btn.addEventListener('click', () => {
@@ -44,6 +48,21 @@ const operators = ['/', '*', '-', '+'];
       if (operators.includes(key)) {
          sign = key;
          out.value = sign;
+         return;
+      }
+
+      if (key === 'DE') {
+         if (b !== '' && sign && !finish) {
+            b = b.slice(0, -1);
+            updateDisplay(b || '0');
+         } else if (!sign) {
+            a = a.slice(0, -1);
+            updateDisplay(a || '0');
+         } else if (finish) {
+            a = a.slice(0, -1);
+            updateDisplay(a || '0');
+            finish = false;
+         }
          return;
       }
 
